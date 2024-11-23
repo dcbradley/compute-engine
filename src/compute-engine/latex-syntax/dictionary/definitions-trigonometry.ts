@@ -2,6 +2,7 @@ import { Expression } from '../../../math-json/types';
 import {
   ExpressionParseHandler,
   LatexDictionary,
+  INVISIBLE_OP_PRECEDENCE,
   MULTIPLICATION_PRECEDENCE,
   Parser,
   Terminator,
@@ -75,7 +76,7 @@ function parseTrig(op: string): ExpressionParseHandler {
     // trig function is encountered, i.e. ensure that
     // "\cos a \sin b" is parsed as "(\cos a)(\sin b)" and not "\cos (a \sin b)"
     const args = parser.parseArguments('implicit', {
-      minPrec: MULTIPLICATION_PRECEDENCE,
+      minPrec: INVISIBLE_OP_PRECEDENCE,
       condition: (parser) =>
         trigCommands[parser.peek] || (until?.condition?.(parser) ?? false),
     });
